@@ -1,9 +1,9 @@
 package ethiqque.registration.controller;
 
-public class RegistrationController {
-}
-package com.example.demo.registration;
-
+import ethiqque.registration.entity.dto.RegistrationRequest;
+import ethiqque.registration.entity.dto.UserDto;
+import ethiqque.registration.service.confirmation.token.ConfirmationTokenService;
+import ethiqque.registration.service.registration.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private final RegistrationService registrationService;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
+    public UserDto register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }
 
-    @GetMapping(path = "confirm")
+    @GetMapping(path = "/confirm")
     public String confirm(@RequestParam("token") String token) {
-        return registrationService.confirmToken(token);
+        return confirmationTokenService.confirmToken(token);
     }
 
 }
